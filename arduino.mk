@@ -234,6 +234,10 @@ BOARD_UPLOAD_SPEED := \
 	$(shell sed -ne "s/$(BOARD).upload.speed=\(.*\)/\1/p" $(BOARDS_FILE))
 BOARD_UPLOAD_PROTOCOL := \
 	$(shell sed -ne "s/$(BOARD).upload.protocol=\(.*\)/\1/p" $(BOARDS_FILE))
+BOARD_USB_VID := \
+	$(shell sed -ne "s/$(BOARD).build.vid=\(.*\)/\1/p" $(BOARDS_FILE))
+BOARD_USB_PID := \
+	$(shell sed -ne "s/$(BOARD).build.pid=\(.*\)/\1/p" $(BOARDS_FILE))
 
 # invalid board?
 ifeq "$(BOARD_BUILD_MCU)" ""
@@ -249,6 +253,9 @@ CPPFLAGS := -Os -Wall -fno-exceptions -ffunction-sections -fdata-sections
 CPPFLAGS += -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums
 CPPFLAGS += -mmcu=$(BOARD_BUILD_MCU)
 CPPFLAGS += -DF_CPU=$(BOARD_BUILD_FCPU) -DARDUINO=$(ARDUINOCONST)
+ifneq "$(BOARD_USB_VID)" ""
+CPPFLAGS += -DUSB_VID=$(BOARD_USB_VID) -DUSB_PID=$(BOARD_USB_PID)
+endif
 CPPFLAGS += -I. -Iutil -Iutility -I$(ARDUINOCOREDIR)
 CPPFLAGS += -I$(ARDUINODIR)/hardware/arduino/variants/$(BOARD_BUILD_VARIANT)/
 CPPFLAGS += $(addprefix -I$(ARDUINODIR)/libraries/, $(LIBRARIES))
