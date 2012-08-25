@@ -264,7 +264,7 @@ CPPDEPFLAGS = -MMD -MP -MF .dep/$<.dep
 CPPINOFLAGS := -x c++ -include $(ARDUINOCOREDIR)/Arduino.h
 AVRDUDEFLAGS := $(addprefix -C , $(AVRDUDECONF)) -DV
 AVRDUDEFLAGS += -p $(BOARD_BUILD_MCU) -P $(SERIALDEV)
-AVRDUDEFLAGS += -c $(BOARD_UPLOAD_PROTOCOL)
+AVRDUDEFLAGS += -c $(BOARD_UPLOAD_PROTOCOL) -b $(BOARD_UPLOAD_SPEED)
 LINKFLAGS := -Os -Wl,--gc-sections -mmcu=$(BOARD_BUILD_MCU)
 
 # figure out which arg to use with stty
@@ -296,8 +296,7 @@ upload:
 		echo "*GUESSING* at serial device:" $(SERIALDEV); \
 		echo; }
 	stty $(STTYFARG) $(SERIALDEV) hupcl
-	$(AVRDUDE) $(AVRDUDEFLAGS) -b 1200 -n 2>/dev/null; sleep 1
-	$(AVRDUDE) $(AVRDUDEFLAGS) -b $(BOARD_UPLOAD_SPEED) -U flash:w:$(TARGET).hex:i
+	$(AVRDUDE) $(AVRDUDEFLAGS) -U flash:w:$(TARGET).hex:i
 
 clean:
 	rm -f $(OBJECTS)
