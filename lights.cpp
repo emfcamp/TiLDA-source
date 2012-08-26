@@ -1,6 +1,6 @@
 #include "lights.h"
 
-int pins[] = {LED_RIGHT, LED_LEFT, LED_BLUE, LED_GREEN, LED_RED};
+int pins[] = {PIN_LED_RIGHT, PIN_LED_LEFT, PIN_LED_BLUE, PIN_LED_GREEN, PIN_LED_RED};
 
 Lights::Lights() {
   for (int i = 0; i < 6; i++) {
@@ -14,15 +14,15 @@ int logScale(int value) {
 }
 
 void Lights::set(int light, Colour colour) {
-  analogWrite(LED_RED, logScale(colour.red));
-  analogWrite(LED_GREEN, logScale(colour.green));
-  analogWrite(LED_BLUE, logScale(colour.blue));
-  if (light == LED_RIGHT) {
-    digitalWrite(LED_RIGHT, HIGH);
-    digitalWrite(LED_LEFT, LOW);
-  } else if (light == LED_LEFT) {
-    digitalWrite(LED_LEFT, HIGH);
-    digitalWrite(LED_RIGHT, LOW);
+  analogWrite(PIN_LED_RED, logScale(colour.red));
+  analogWrite(PIN_LED_GREEN, logScale(colour.green));
+  analogWrite(PIN_LED_BLUE, logScale(colour.blue));
+  if (light == PIN_LED_RIGHT) {
+    digitalWrite(PIN_LED_RIGHT, HIGH);
+    digitalWrite(PIN_LED_LEFT, LOW);
+  } else if (light == PIN_LED_LEFT) {
+    digitalWrite(PIN_LED_LEFT, HIGH);
+    digitalWrite(PIN_LED_RIGHT, LOW);
   }
 }
 

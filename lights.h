@@ -2,8 +2,7 @@
 #define LIGHTS_H
 
 #include "Arduino.h"
-
-enum LED_Pins { LED_RIGHT = 7, LED_LEFT = 4, LED_BLUE = 5, LED_GREEN = 6, LED_RED = 10 };
+#include "pins.h"
 
 struct Colour {
   char red, green, blue;
