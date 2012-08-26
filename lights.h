@@ -15,4 +15,7 @@ class Lights {
   void set(int light, Colour colour);
 };
 
+
+void led_cycle(Lights *lights, int light, int time);
+
 #endif // LIGHTS_H
