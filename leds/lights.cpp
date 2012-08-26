@@ -9,10 +9,14 @@ Lights::Lights() {
   }
 }
 
+int logScale(int value) {
+  return (int)((log(255 - value) / log(255)) * 255);
+}
+
 void Lights::set(int light, Colour colour) {
-  analogWrite(LED_RED, 255-colour.red);
-  analogWrite(LED_GREEN, 255-colour.green);
-  analogWrite(LED_BLUE, 255-colour.blue);
+  analogWrite(LED_RED, logScale(colour.red));
+  analogWrite(LED_GREEN, logScale(colour.green));
+  analogWrite(LED_BLUE, logScale(colour.blue));
   if (light == LED_RIGHT) {
     digitalWrite(LED_RIGHT, HIGH);
     digitalWrite(LED_LEFT, LOW);
