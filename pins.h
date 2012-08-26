@@ -11,4 +11,9 @@ enum Pins { PIN_LED_RIGHT = 7,
             PIN_BUTTON = 2
           };
 
+enum Interrrupts {
+            INT_BUTTON = 1,
+            INT_RF = 2
+};
+
 #endif // PINS_H
