@@ -12,16 +12,12 @@ bool check_torch_mode(int state) {
   } else {
     if (last_button_down != 0 && last_button_down < millis() - 1000) {
       // Engage torch mode
-      Colour c;
-      c.green = c.blue = c.red = 255;
-      lights.set(PIN_LED_LEFT, c);
+      lights.set(PIN_LED_LEFT, 255, 255, 255);
       torch_on = true;
       return true;
     }
     if (torch_on) {
-      Colour c;
-      c.green = c.blue = c.red = 0;
-      lights.set(PIN_LED_LEFT, c);
+      lights.set(PIN_LED_LEFT, 0, 0, 0);
       torch_on = false;
       return true;
     }

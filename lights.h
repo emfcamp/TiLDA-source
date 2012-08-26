@@ -4,16 +4,11 @@
 #include "Arduino.h"
 #include "pins.h"
 
-struct Colour {
-  char red, green, blue;
-};
-
 class Lights {
   public:
   Lights();
-  void set(int light, Colour colour);
+  void set(int light, unsigned char red, unsigned char green, unsigned char blue);
 };
-
 
 void led_cycle(Lights *lights, int light, int time);
 
