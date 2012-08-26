@@ -6,26 +6,34 @@ Lights lights;
 unsigned long last_button_down = 0;
 bool torch_on = false;
 
-void button_press() {
-  // Interrupt handler when button state changes
-  int state = digitalRead(PIN_BUTTON);
+bool check_torch_mode(int state) {
   if (state == LOW) { // Low means pressed
     last_button_down = millis();
-  } else if (state == HIGH) {
+  } else {
     if (last_button_down != 0 && last_button_down < millis() - 1000) {
       // Engage torch mode
       Colour c;
       c.green = c.blue = c.red = 255;
       lights.set(PIN_LED_LEFT, c);
       torch_on = true;
-      return;
+      return true;
     }
     if (torch_on) {
       Colour c;
       c.green = c.blue = c.red = 0;
       lights.set(PIN_LED_LEFT, c);
       torch_on = false;
+      return true;
     }
+  }
+  return false;
+}
+
+void button_press() {
+  // Interrupt handler when button state changes
+  int state = digitalRead(PIN_BUTTON);
+  if (check_torch_mode(state)) {
+    return;
   }
 }
 
