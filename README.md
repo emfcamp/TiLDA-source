@@ -1,7 +1,7 @@
 TiLDA-source
 ============
 
-Source code for TiLDA badges during EMF
+Source code for TiLDA badges during EMF.
 
 For preparation instructions, please see superproject.
 
