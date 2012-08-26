@@ -2,6 +2,9 @@
 
 int pins[] = {PIN_LED_RIGHT, PIN_LED_LEFT, PIN_LED_BLUE, PIN_LED_GREEN, PIN_LED_RED};
 
+// Calibration for LED colour issues
+const float calibration[] = {0.8, 1, 1};
+
 Lights::Lights() {
   for (int i = 0; i < 6; i++) {
       pinMode(pins[i], OUTPUT);
@@ -9,14 +12,14 @@ Lights::Lights() {
   }
 }
 
-int logScale(int value) {
-  return (int)((log(255 - value) / log(255)) * 255);
+unsigned logScale(float value) {
+  return (unsigned char)((log(255 - value) / log(255)) * 255);
 }
 
-void Lights::set(int light, Colour colour) {
-  analogWrite(PIN_LED_RED, logScale(colour.red * 0.8));
-  analogWrite(PIN_LED_GREEN, logScale(colour.green));
-  analogWrite(PIN_LED_BLUE, logScale(colour.blue));
+void Lights::set(int light, unsigned char red, unsigned char green, unsigned char blue) {
+  analogWrite(PIN_LED_RED, logScale(red * calibration[0]));
+  analogWrite(PIN_LED_GREEN, logScale(green * calibration[1]));
+  analogWrite(PIN_LED_BLUE, logScale(blue * calibration[2]));
   if (light == PIN_LED_RIGHT) {
     digitalWrite(PIN_LED_RIGHT, HIGH);
     digitalWrite(PIN_LED_LEFT, LOW);
@@ -27,16 +30,15 @@ void Lights::set(int light, Colour colour) {
 }
 
 void led_cycle(Lights *lights, int light, int time) {
-  Colour c;
-  char brightness = 128;
+  unsigned char red = 0, green = 0, blue = 0;
+  unsigned char brightness = 128;
   float step = (2 * PI) / time;
   for (float i = 0; i < 2 * PI; i += step) {
-    c.red = (int)(abs(sin(i)) * brightness);
-    c.green = (int)(abs(sin(i + PI / 2)) * brightness);
-    c.blue = (int)(abs(sin(i + PI)) * brightness);
-    lights->set(light, c);
+    red = (unsigned char)(abs(sin(i)) * brightness);
+    green = (unsigned char)(abs(sin(i + PI / 4)) * brightness);
+    blue = (unsigned char)(abs(sin(i + PI / 2)) * brightness);
+    lights->set(light, red, green, blue);
     delay(1);
   }
-  c.red = 0; c.green = 0; c.blue = 0;
-  lights->set(light, c);
+  lights->set(light, 0, 0, 0);
 }
