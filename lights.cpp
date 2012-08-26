@@ -14,7 +14,7 @@ int logScale(int value) {
 }
 
 void Lights::set(int light, Colour colour) {
-  analogWrite(PIN_LED_RED, logScale(colour.red));
+  analogWrite(PIN_LED_RED, logScale(colour.red * 0.8));
   analogWrite(PIN_LED_GREEN, logScale(colour.green));
   analogWrite(PIN_LED_BLUE, logScale(colour.blue));
   if (light == PIN_LED_RIGHT) {
