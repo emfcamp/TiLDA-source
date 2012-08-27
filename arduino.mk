@@ -265,7 +265,7 @@ CPPINOFLAGS := -x c++ -include $(ARDUINOCOREDIR)/Arduino.h
 AVRDUDEFLAGS := $(addprefix -C , $(AVRDUDECONF)) -DV
 AVRDUDEFLAGS += -p $(BOARD_BUILD_MCU) -P $(SERIALDEV)
 AVRDUDEFLAGS += -c $(BOARD_UPLOAD_PROTOCOL) -b $(BOARD_UPLOAD_SPEED)
-LINKFLAGS := -Os -Wl,--gc-sections -mmcu=$(BOARD_BUILD_MCU) $(LINKFLAGS)
+LINKFLAGS := -Os -Wl,--gc-sections -mmcu=$(BOARD_BUILD_MCU)
 
 # figure out which arg to use with stty
 STTYFARG := $(shell stty --help > /dev/null 2>&1 && echo -F || echo -f)
@@ -332,7 +332,7 @@ $(TARGET).hex: $(TARGET).elf
 .INTERMEDIATE: $(TARGET).elf
 
 $(TARGET).elf: $(ARDUINOLIB) $(OBJECTS)
-	$(CC) $(LINKFLAGS) $(OBJECTS) $(ARDUINOLIB) -o $@
+	$(CC) $(LINKFLAGS) $(OBJECTS) $(ARDUINOLIB) $(LINKFLAGSEXTRA) -o $@
 
 %.o: %.c
 	mkdir -p .dep/$(dir $<)
