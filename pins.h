@@ -1,7 +1,8 @@
 #ifndef PINS_H
 #define PINS_H
 
-enum Pins { PIN_LED_RIGHT = 7,
+enum Pins { PIN_LED_BOTH = -1,
+            PIN_LED_RIGHT = 7,
             PIN_LED_LEFT = 4,
             PIN_LED_BLUE = 5,
             PIN_LED_GREEN = 6,

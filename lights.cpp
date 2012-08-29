@@ -26,6 +26,9 @@ void Lights::set(int light, unsigned char red, unsigned char green, unsigned cha
   } else if (light == PIN_LED_LEFT) {
     digitalWrite(PIN_LED_LEFT, HIGH);
     digitalWrite(PIN_LED_RIGHT, LOW);
+  } else if (light == PIN_LED_BOTH) {
+    digitalWrite(PIN_LED_LEFT, HIGH);
+    digitalWrite(PIN_LED_RIGHT, HIGH);
   }
 }
 
@@ -40,5 +43,4 @@ void led_cycle(Lights *lights, int light, int time) {
     lights->set(light, red, green, blue);
     delay(1);
   }
-  lights->set(light, 0, 0, 0);
 }

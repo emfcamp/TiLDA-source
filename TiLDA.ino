@@ -36,6 +36,8 @@ void button_press() {
 void setup() {
   led_cycle(&lights, PIN_LED_LEFT, 250);
   led_cycle(&lights, PIN_LED_RIGHT, 250);
+  lights.set(PIN_LED_BOTH, 0, 0, 0);
+
   pinMode(PIN_BUTTON, INPUT_PULLUP);
   attachInterrupt(INT_BUTTON, button_press, CHANGE);
 }
