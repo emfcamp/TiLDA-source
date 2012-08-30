@@ -332,7 +332,7 @@ $(TARGET).hex: $(TARGET).elf
 .INTERMEDIATE: $(TARGET).elf
 
 $(TARGET).elf: $(ARDUINOLIB) $(OBJECTS)
-	$(CC) $(LINKFLAGS) $(OBJECTS) $(ARDUINOLIB) -o $@
+	$(CC) $(LINKFLAGS) $(OBJECTS) $(ARDUINOLIB) $(LINKFLAGSEXTRA) -o $@
 
 %.o: %.c
 	mkdir -p .dep/$(dir $<)
