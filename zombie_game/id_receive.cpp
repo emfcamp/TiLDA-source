@@ -1,5 +1,6 @@
 #include "RF24/RF24.h"
 #include <avr/io.h>
+#include <arduino.h>
 #include <inttypes.h>
 #include <avr/eeprom.h>
 #include "lights.h"
