@@ -25,8 +25,8 @@ void begin() {
 
   // Setup
   Mirf.spi = &MirfHardwareSpi;
-  Mirf.cePin = A0;
-  Mirf.csnPin = A1;
+  Mirf.cePin = A4;
+  Mirf.csnPin = A5;
   Mirf.init();
   Mirf.setRADDR((byte *)"clie1");
   Mirf.payload = sizeof(unsigned long);
