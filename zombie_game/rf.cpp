@@ -15,8 +15,9 @@
  * statements not displaying the result and load 
  * 'ping_server_interupt' on the server.
  */
-
+#define MAGICSIG 0xE14F
 #include "rf.h"
+#include "ID.h"
 
 void rf_setup(){
   Serial.begin(9600);
@@ -48,7 +49,7 @@ void rf_setup(){
    * NB: payload on client and server must be the same.
    */
    
-  Mirf.payload = sizeof(uint16_t);
+  Mirf.payload = 4;
   
   /*
    * Write channel and payload config then power up reciver.
@@ -66,12 +67,25 @@ void rf_setup(){
 }
 
 ISR(SIG_OUTPUT_COMPARE0){
-  //ping on OC0
-  
-  Mirf.setTADDR((byte *)"clie1");
-  
-  Mirf.send((byte[2])ID);
+  //ping and poll on OC0
   Lights::set(0,0x10,0xFF,0x50);
+  if(!Mirf.isSending() && Mirf.dataReady()){
+    /*
+     * Get load the packet into the buffer.
+     */
+     
+    Mirf.getData(data);
+    
+    /*
+     * Set the send address.
+     */
+  }
+ 
+  Mirf.setTADDR((byte *)"clie1");
+  uint16_t data[2];
+  data[0]=MAGICSIG;
+  data[1]=ID;
+  Mirf.send((byte *)data);
   while(Mirf.isSending()){
   }
   Lights::set(0,0x0,0x00,0x00);
